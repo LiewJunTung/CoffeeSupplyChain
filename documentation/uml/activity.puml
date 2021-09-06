@@ -1,0 +1,19 @@
+@startuml
+
+| Coffee |
+start
+| Farmer |
+:harvestItem();
+:processItem();
+:packItem();
+:addItem();
+| Distributor |
+:buyItem();
+| Farmer |
+:shipItem();
+| Retailer |
+:receiveItem();
+| Consumer |
+:fetchItem();
+stop
+@enduml

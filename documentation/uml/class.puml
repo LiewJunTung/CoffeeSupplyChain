@@ -1,0 +1,115 @@
+@startuml
+
+class FarmerRoles {
+    - role: Role
+    - FarmerAdded(account: address indexed): event
+    - FarmerRemoved(account: address indexed): event
+    - onlyFarmer()
+    + isFarmer(account: address)
+    + addFarmer(account: address)
+    + renounceFarmer()
+    ~ addFarmer(account: address)
+    ~ removeFarmer(account: address)
+}
+class Ownable {
+    - origOwner: address
+    - TransferOwnership(address indexed oldOwner, address indexed newOwner): event
+    - onlyOwner()
+    + owner(): address
+    + isOwner(): bool
+    + renounceOwnership(newOwner: address)
+    + transferOwnership(newOwner: address)
+    ~ _transferOwnership(newOwner: address)
+}
+class ConsumerRole {
+    - role: Role
+    - ConsumerAdded(account: address indexed): event
+    - ConsumerRemoved(account: address indexed): event
+    - onlyConsumer()
+    + isConsumer(account: address)
+    + addConsumer(account: address)
+    + renounceConsumer()
+    ~ addConsumer(account: address)
+    ~ removeConsumer(account: address)
+}
+class DistributorRole {
+    - role: Role
+    - DistributorAdded(account: address indexed): event
+    - DistributorRemoved(account: address indexed): event
+    - onlyDistributor()
+    + isDistributor(account: address)
+    + addDistributor(account: address)
+    + renounceDistributor()
+    ~ addDistributor(account: address)
+    ~ removeDistributor(account: address)
+}
+class RetailerRole {
+    - role: Role
+    - RetailerAdded(account: address indexed): event
+    - RetailerRemoved(account: address indexed): event
+    - onlyRetailer()
+    + isRetailer(account: address)
+    + addRetailer(account: address)
+    + renounceRetailer()
+    ~ addRetailer(account: address)
+    ~ removeRetailer(account: address)
+}
+class Roles {
+    # add(role: Role, account: address)
+    # remove(role: Role, account: address)
+    # has(role: Role, account: address)
+}
+class SupplyChain {
+    owner: address payable
+    upc: uint
+    sku: uint
+    {field} items: mapping(uint => Item)
+}
+class Role {
+   {field} bearer: mapping(address => bool)    
+}
+
+enum State {
+    Harvested
+    Processed
+    Packed
+    ForSale
+    Sold
+    Shipped
+    Received
+    Purchased
+}
+
+class Item {
+    sku: uint
+    upc: uint
+    ownerID: address
+    originFarmerID: address
+    originFarmName: string
+    originFarmInformation: string
+    originFarmLatitude: string
+    originFarmLongitude: string
+    productID: uint
+    productNotes: string
+    productPrice: uint
+    itemState: State
+    distributorID: address
+    retailerID: address
+    consumerID: address payable
+}
+
+Role --o Roles
+Roles <.. FarmerRoles
+Roles <.. ConsumerRole
+Roles <.. DistributorRole
+Roles <.. RetailerRole
+FarmerRoles <|-- SupplyChain
+ConsumerRole <|-- SupplyChain
+DistributorRole <|-- SupplyChain
+RetailerRole <|-- SupplyChain
+Ownable <|-- SupplyChain
+SupplyChain o-- Item
+SupplyChain o-- State
+
+
+@enduml

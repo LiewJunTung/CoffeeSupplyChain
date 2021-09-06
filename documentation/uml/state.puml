@@ -1,0 +1,56 @@
+@startuml
+
+state Farmer as "Farmer"
+Farmer: isFarmer
+state Farmer2 as "Farmer"
+Farmer2: isFarmer
+Farmer2: isHarvested
+Farmer->Farmer2
+state Farmer3 as "Farmer"
+Farmer3: isFarmer
+Farmer3: isProcessed
+Farmer2->Farmer3
+state Farmer4 as "Farmer"
+Farmer4: isFarmer
+Farmer4: isPacked
+Farmer3->Farmer4
+state Distributor as "Distributor"
+Distributor: isDistributor
+Distributor: isPacked
+Farmer4->Distributor
+state Farmer5 as "Farmer"
+Farmer5: isFarmer
+Farmer5: isSold
+Distributor->Farmer5
+state Retailer as "Retailer"
+Retailer: isRetailer
+Retailer: isShipped
+Farmer5->Retailer
+state Consumer as "Consumer"
+Consumer: isConsumer
+Consumer: isPurchased
+Retailer->Consumer
+
+[*] -> Farmer
+
+
+state Coffee as "Coffee State" {
+    [*]->Harvested
+    Farmer-->Harvested: harvestItem()
+    Harvested->Processed
+    Farmer2-->Processed: processItem()
+    Processed->Packed
+    Farmer3-->Packed: packItem()
+    Packed->ForSale
+    Farmer4-->ForSale: addItem()
+    ForSale->Sold
+    Distributor-->Sold: buyItem()
+    Sold->Shipped
+    Farmer5-->Shipped: shipItem()
+    Shipped->Received
+    Retailer-->Received: buyItem()
+    Received->Purchased
+    Consumer-->Purchased: fetchItem()
+
+}
+@enduml

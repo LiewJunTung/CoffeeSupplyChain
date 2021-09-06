@@ -1,0 +1,26 @@
+@startuml
+
+participant Coffee as coffee
+participant Farmer as farmer
+participant Distributor as distributor
+participant Retailer as retailer
+participant Consumer as consumer
+
+activate coffee
+activate farmer
+farmer->coffee: harvestItem()
+farmer->coffee: processItem()
+farmer->coffee: packItem()
+farmer->coffee: addItem()
+activate distributor
+distributor->farmer: buyItem()
+deactivate distributor
+activate retailer
+farmer->retailer: shipItem()
+retailer->farmer: receiveItem()
+activate consumer
+deactivate farmer
+consumer->retailer: purchaseItem()
+deactivate retailer
+coffee->consumer: fetchItem()
+@enduml
