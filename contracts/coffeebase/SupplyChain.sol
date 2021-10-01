@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.7;
+import '../coffeeaccesscontrol/FarmerRole.sol';
 // Define a contract 'Supplychain'
-contract SupplyChain {
+contract SupplyChain is FarmerRole {
 
   // Define 'owner'
   address payable owner;
