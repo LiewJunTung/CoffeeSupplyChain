@@ -278,8 +278,17 @@ contract SupplyChain is FarmerRole {
   ) 
   {
   // Assign values to the 8 parameters
-  
-    
+  Item memory item = items[_upc];
+  itemSKU = item.sku;
+  itemUPC = item.upc;
+  ownerID = item.ownerID;
+  originFarmerID = item.originFarmerID;
+  originFarmName = item.originFarmName;
+  originFarmInformation = item.originFarmInformation;
+  originFarmLatitude = item.originFarmLatitude;
+  originFarmLongitude = item.originFarmLongitude;
+
+
   return 
   (
   itemSKU,
@@ -308,7 +317,16 @@ contract SupplyChain is FarmerRole {
   ) 
   {
     // Assign values to the 9 parameters
-  
+  Item memory item = items[_upc];
+  itemSKU = item.sku;
+  itemUPC = item.upc;
+  productID = item.productID;
+  productNotes = item.productNotes;
+  productPrice = item.productPrice;
+  itemState = uint(item.itemState);
+  distributorID = item.distributorID;
+  retailerID = item.retailerID;
+  consumerID = item.consumerID;
     
   return 
   (
