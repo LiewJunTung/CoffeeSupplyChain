@@ -21,6 +21,9 @@ contract('SupplyChain', function(accounts) {
     const consumerID = accounts[4]
     const emptyAddress = '0x00000000000000000000000000000000000000'
 
+    const HARVESTED_STATE = 0
+    const PROCESSED_STATE = 1
+
     ///Available Accounts
     ///==================
     ///(0) 0x27d8d15cbc94527cadf5ec14b69519ae23288b95
@@ -66,7 +69,7 @@ contract('SupplyChain', function(accounts) {
         assert.equal(resultBufferOne[5], originFarmInformation, 'Error: Missing or Invalid originFarmInformation')
         assert.equal(resultBufferOne[6], originFarmLatitude, 'Error: Missing or Invalid originFarmLatitude')
         assert.equal(resultBufferOne[7], originFarmLongitude, 'Error: Missing or Invalid originFarmLongitude')
-        assert.equal(resultBufferTwo[5], 0, 'Error: Invalid item State')
+        assert.equal(resultBufferTwo[5], HARVESTED_STATE, 'Error: Invalid item State')
         assert.equal(call.logs[0].event, 'Harvested', 'Invalid event emitted')        
     })    
 
@@ -89,7 +92,7 @@ contract('SupplyChain', function(accounts) {
         assert.equal(resultBufferOne[5], originFarmInformation, 'Error: Missing or Invalid originFarmInformation')
         assert.equal(resultBufferOne[6], originFarmLatitude, 'Error: Missing or Invalid originFarmLatitude')
         assert.equal(resultBufferOne[7], originFarmLongitude, 'Error: Missing or Invalid originFarmLongitude')
-        assert.equal(resultBufferTwo[5], 1, 'Error: Invalid item State')
+        assert.equal(resultBufferTwo[5], PROCESSED_STATE, 'Error: Invalid item State')
         assert.equal(call.logs[0].event, 'Processed', 'Invalid event emitted') 
     })    
 
