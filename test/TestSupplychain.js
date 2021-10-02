@@ -24,7 +24,7 @@ contract('SupplyChain', function(accounts) {
     const HARVESTED_STATE = 0
     const PROCESSED_STATE = 1
     const PACKED_STATE = 2
-    const SOLD_STATE = 3
+    const FAR_SALE_STATE = 3
 
     ///Available Accounts
     ///==================
@@ -129,20 +129,26 @@ contract('SupplyChain', function(accounts) {
     // 4th Test
     it("Testing smart contract function sellItem() that allows a farmer to sell coffee", async() => {
         const supplyChain = await SupplyChain.deployed()
-        
-        // Declare and Initialize a variable for event
-        
-        
-        // Watch the emitted event ForSale()
-        
 
         // Mark an item as ForSale by calling function sellItem()
+        const call = await supplyChain.sellItem(upc, productPrice, {'from': originFarmerID})
         
-
         // Retrieve the just now saved item from blockchain by calling function fetchItem()
-        
-
+        const resultBufferOne = await supplyChain.fetchItemBufferOne.call(upc)
+        const resultBufferTwo = await supplyChain.fetchItemBufferTwo.call(upc)
         // Verify the result set
+        assert.equal(resultBufferOne[0], sku, 'Error: Invalid item SKU')
+        assert.equal(resultBufferOne[1], upc, 'Error: Invalid item UPC')
+        assert.equal(resultBufferOne[2], originFarmerID, 'Error: Missing or Invalid ownerID')
+        assert.equal(resultBufferOne[3], originFarmerID, 'Error: Missing or Invalid originFarmerID')
+        assert.equal(resultBufferOne[4], originFarmName, 'Error: Missing or Invalid originFarmName')
+        assert.equal(resultBufferOne[5], originFarmInformation, 'Error: Missing or Invalid originFarmInformation')
+        assert.equal(resultBufferOne[6], originFarmLatitude, 'Error: Missing or Invalid originFarmLatitude')
+        assert.equal(resultBufferOne[7], originFarmLongitude, 'Error: Missing or Invalid originFarmLongitude')
+        assert.equal(resultBufferTwo[2], productID, 'Error: Invalid productId')
+        assert.equal(resultBufferTwo[4], productPrice, 'Error: Invalid product price')
+        assert.equal(resultBufferTwo[5], FAR_SALE_STATE, 'Error: Invalid item State')
+        assert.equal(call.logs[0].event, 'ForSale', 'Invalid event emitted')  
           
     })    
 
