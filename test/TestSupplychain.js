@@ -24,6 +24,7 @@ contract('SupplyChain', function(accounts) {
     const HARVESTED_STATE = 0
     const PROCESSED_STATE = 1
     const PACKED_STATE = 2
+    const SOLD_STATE = 3
 
     ///Available Accounts
     ///==================
@@ -70,6 +71,7 @@ contract('SupplyChain', function(accounts) {
         assert.equal(resultBufferOne[5], originFarmInformation, 'Error: Missing or Invalid originFarmInformation')
         assert.equal(resultBufferOne[6], originFarmLatitude, 'Error: Missing or Invalid originFarmLatitude')
         assert.equal(resultBufferOne[7], originFarmLongitude, 'Error: Missing or Invalid originFarmLongitude')
+        assert.equal(resultBufferTwo[2], productID, 'Error: Invalid productId')
         assert.equal(resultBufferTwo[5], HARVESTED_STATE, 'Error: Invalid item State')
         assert.equal(call.logs[0].event, 'Harvested', 'Invalid event emitted')        
     })    
@@ -93,6 +95,7 @@ contract('SupplyChain', function(accounts) {
         assert.equal(resultBufferOne[5], originFarmInformation, 'Error: Missing or Invalid originFarmInformation')
         assert.equal(resultBufferOne[6], originFarmLatitude, 'Error: Missing or Invalid originFarmLatitude')
         assert.equal(resultBufferOne[7], originFarmLongitude, 'Error: Missing or Invalid originFarmLongitude')
+        assert.equal(resultBufferTwo[2], productID, 'Error: Invalid productId')
         assert.equal(resultBufferTwo[5], PROCESSED_STATE, 'Error: Invalid item State')
         assert.equal(call.logs[0].event, 'Processed', 'Invalid event emitted') 
     })    
@@ -118,6 +121,7 @@ contract('SupplyChain', function(accounts) {
         assert.equal(resultBufferOne[5], originFarmInformation, 'Error: Missing or Invalid originFarmInformation')
         assert.equal(resultBufferOne[6], originFarmLatitude, 'Error: Missing or Invalid originFarmLatitude')
         assert.equal(resultBufferOne[7], originFarmLongitude, 'Error: Missing or Invalid originFarmLongitude')
+        assert.equal(resultBufferTwo[2], productID, 'Error: Invalid productId')
         assert.equal(resultBufferTwo[5], PACKED_STATE, 'Error: Invalid item State')
         assert.equal(call.logs[0].event, 'Packed', 'Invalid event emitted')  
     })    
