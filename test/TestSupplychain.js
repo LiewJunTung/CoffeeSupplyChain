@@ -34,6 +34,7 @@ contract('SupplyChain', function(accounts) {
     ///(8) 0xe07b5ee5f738b2f87f88b99aac9c64ff1e0c7917
     ///(9) 0xbd3ff2e3aded055244d66544c9c059fa0851da44
 
+
     console.log("ganache-cli accounts used here...")
     console.log("Contract Owner: accounts[0] ", accounts[0])
     console.log("Farmer: accounts[1] ", accounts[1])
@@ -48,16 +49,14 @@ contract('SupplyChain', function(accounts) {
         await supplyChain.addFarmer(accounts[1])
         
         // Declare and Initialize a variable for event
-        var eventEmitted = false
         
         // Watch the emitted event Harvested()
         // Mark an item as Harvested by calling function harvestItem()
-        const call = await supplyChain.harvestItem(upc, originFarmName, originFarmInformation, originFarmLatitude, originFarmLongitude, productNotes, {from: accounts[1]})
+        const call = await supplyChain.harvestItem(upc, originFarmName, originFarmInformation, originFarmLatitude, originFarmLongitude, productNotes, {from: originFarmerID})
         // Retrieve the just now saved item from blockchain by calling function fetchItem()
         const resultBufferOne = await supplyChain.fetchItemBufferOne.call(upc)
         const resultBufferTwo = await supplyChain.fetchItemBufferTwo.call(upc)
 
-        console.log(resultBufferOne);
         // Verify the result set
         assert.equal(resultBufferOne[0], web3.utils.toBN(sku).toString(), 'Error: Invalid item SKU')
         assert.equal(resultBufferOne[1], web3.utils.toBN(upc).toString(), 'Error: Invalid item UPC')
@@ -74,18 +73,24 @@ contract('SupplyChain', function(accounts) {
     // 2nd Test
     it("Testing smart contract function processItem() that allows a farmer to process coffee", async() => {
         const supplyChain = await SupplyChain.deployed()
-
-
         // Mark an item as Processed by calling function processtItem()
-        await supplyChain.processtItem(upc)
-
-
+        const call = await supplyChain.processItem(upc, {'from': originFarmerID})
 
         // Retrieve the just now saved item from blockchain by calling function fetchItem()
-        
+        const resultBufferOne = await supplyChain.fetchItemBufferOne.call(upc)
+        const resultBufferTwo = await supplyChain.fetchItemBufferTwo.call(upc)
 
         // Verify the result set
-        
+        assert.equal(resultBufferOne[0], web3.utils.toBN(sku).toString(), 'Error: Invalid item SKU')
+        assert.equal(resultBufferOne[1], web3.utils.toBN(upc).toString(), 'Error: Invalid item UPC')
+        assert.equal(resultBufferOne[2], originFarmerID, 'Error: Missing or Invalid ownerID')
+        assert.equal(resultBufferOne[3], originFarmerID, 'Error: Missing or Invalid originFarmerID')
+        assert.equal(resultBufferOne[4], originFarmName, 'Error: Missing or Invalid originFarmName')
+        assert.equal(resultBufferOne[5], originFarmInformation, 'Error: Missing or Invalid originFarmInformation')
+        assert.equal(resultBufferOne[6], originFarmLatitude, 'Error: Missing or Invalid originFarmLatitude')
+        assert.equal(resultBufferOne[7], originFarmLongitude, 'Error: Missing or Invalid originFarmLongitude')
+        assert.equal(resultBufferTwo[5], 1, 'Error: Invalid item State')
+        assert.equal(call.logs[0].event, 'Processed', 'Invalid event emitted') 
     })    
 
     // 3rd Test
