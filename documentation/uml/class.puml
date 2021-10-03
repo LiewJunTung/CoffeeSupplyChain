@@ -64,6 +64,28 @@ class SupplyChain {
     upc: uint
     sku: uint
     {field} items: mapping(uint => Item)
+    {field} itemsHistory: mapping(uint => string[])
+    - Harvested(uint upc): event
+    - Processed(uint upc): event
+    - Packed(uint upc): event
+    - ForSale(uint upc): event
+    - Sold(uint upc): event
+    - Shipped(uint upc): event
+    - Received(uint upc): event
+    - Purchased(uint upc): event
+    + constructor()
+    + kill()
+    + harvestItem(_upc: uint, _originFarmName: string memory, _originFarmInformation string memory, _originFarmLatitude: string memory, _originFarmLongitude: string memory, _productNotes: string memory)
+    + processItem(_upc: uint)
+    + packItem(_upc: uint)
+    + sellItem(_upc: uint, _price: uint)
+    + buyItem(_upc: uint)
+    + shipItem(_upc: uint)
+    + receiveItem(_upc: uint)
+    + purchaseItem(_upc: uint)
+    + fetchItemBufferOne(_upc: uint)
+    + fetchItemBufferTwo(_upc: uint)
+
 }
 class Role {
    {field} bearer: mapping(address => bool)    

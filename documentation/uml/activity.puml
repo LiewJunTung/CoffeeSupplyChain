@@ -9,7 +9,6 @@ start
 :addItem();
 | Distributor |
 :buyItem();
-| Farmer |
 :shipItem();
 | Retailer |
 :receiveItem();
