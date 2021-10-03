@@ -12,4 +12,8 @@
 ### State Diagram
 ![state](https://plantuml.com/plantuml/svg/VPG_QyCm4CLtVGhXgIreiJrfC86MqcwX7ai7nLQmgHC7IGwKqkzU_Jlvb8HayUbtzzvXFv6DDaAPvJ0HOYiZwQjG1wceqBG8PK72azDHXogRB6-CbcWMaJUXpb8RsKV8cjZC3AiRXjMLeITRDNTIwsHOWcELETOt7EihHq-seljETXNOrT7kPTH6ZRl5pE43eND1qC4veUDbArjIimQFNYqgxsugxwpolNQUUWopRV3XFwGHunHJXqD1e78-K6Um7SRJIMR-De8q6ioVvwDUu4h1eI1GEH-eCxXTL3S85ouOiYODai-dBygQ630XQTT-BsNSvClMyOB-4cf_LiIQzHOw56yYmfmEeNmtyl3mwATIapNhdLlb9KESqrCeaJurxLm8VnLN3A1LsYUMUMnluQnQCKaagbcYd8g-HwA8MUEZTmJ77p2dk-K7QHopdHZdXSQzNMnngcs1XO6xq3ivdgCu1RRoout0xRkdd1s7X1bgSBgNfXkYcloHZJpszY_h7m00 "state")
 
+## Modification
+1. Removed UPC field in SupplyChain.sol
+2. Made Distributor as payable instead of Customer. Reasons being that the Distributor is the one paying the farmer, not the customer. And the refund should be given back to the Distributor instead.
+
 ## Libraries
