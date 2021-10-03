@@ -186,7 +186,7 @@ contract('SupplyChain', function(accounts) {
         const afterDistributorBalance = await web3.eth.getBalance(distributorID)
 
         assert.equal(web3.utils.fromWei(afterFarmerBalance) - web3.utils.fromWei(beforeFarmerBalance), web3.utils.fromWei(productPrice), "Error: Farmer receive not matching product price")
-        assert.isAtMost(web3.utils.fromWei(beforeFarmerBalance) - web3.utils.fromWei(afterDistributorBalance), parseInt(productPrice)+1, "Error: Distributor pay not matching product price")
+        assert.isAtMost(web3.utils.fromWei(beforeDistributorBalance) - web3.utils.fromWei(afterDistributorBalance), parseInt(productPrice)+1, "Error: Distributor pay not matching product price")
         // assert.isBelow(web3.utils.fromWei(beforeDistributorBalance - afterDistributorBalance), productPrice, "Error: Farmer receive not matching product price")
         // Verify the result set
         assert.equal(itemInfo.sku, sku, 'Error: Invalid item SKU')
@@ -210,20 +210,32 @@ contract('SupplyChain', function(accounts) {
     // 6th Test
     it("Testing smart contract function shipItem() that allows a distributor to ship coffee", async() => {
         const supplyChain = await SupplyChain.deployed()
-        
-        // Declare and Initialize a variable for event
-        
-        
-        // Watch the emitted event Shipped()
-        
+    
 
-        // Mark an item as Sold by calling function buyItem()
+        // Mark an item as Sold by calling function shipItem()
+        const call = await supplyChain.shipItem(upc, {'from': distributorID})
         
 
         // Retrieve the just now saved item from blockchain by calling function fetchItem()
+        const resultBufferOne = await supplyChain.fetchItemBufferOne.call(upc)
+        const resultBufferTwo = await supplyChain.fetchItemBufferTwo.call(upc)
+        const itemInfo = new ItemInformation(resultBufferOne, resultBufferTwo);
         
-
         // Verify the result set
+        assert.equal(itemInfo.sku, sku, 'Error: Invalid item SKU')
+        assert.equal(itemInfo.upc, upc, 'Error: Invalid item UPC')
+        assert.equal(itemInfo.ownerID, distributorID, 'Error: Missing or Invalid ownerID')
+        assert.equal(itemInfo.originFarmerID, originFarmerID, 'Error: Missing or Invalid originFarmerID')
+        assert.equal(itemInfo.originFarmName, originFarmName, 'Error: Missing or Invalid originFarmName')
+        assert.equal(itemInfo.originFarmInformation, originFarmInformation, 'Error: Missing or Invalid originFarmInformation')
+        assert.equal(itemInfo.originFarmLatitude, originFarmLatitude, 'Error: Missing or Invalid originFarmLatitude')
+        assert.equal(itemInfo.originFarmLongitude, originFarmLongitude, 'Error: Missing or Invalid originFarmLongitude')
+        assert.equal(itemInfo.distributorID, distributorID, 'Error: Missing or Invalid distributorID')
+        assert.equal(itemInfo.productID, productID, 'Error: Invalid productId')
+        assert.equal(itemInfo.productNotes, productNotes, 'Error: Invalid productNotes')
+        assert.equal(itemInfo.productPrice, productPrice, 'Error: Invalid productPrice')
+        assert.equal(itemInfo.itemState, SHIPPED_STATE, 'Error: Invalid item State')
+        assert.equal(call.logs[0].event, 'Shipped', 'Invalid event emitted')  
               
     })    
 
