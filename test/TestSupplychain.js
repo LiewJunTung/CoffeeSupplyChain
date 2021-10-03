@@ -56,7 +56,7 @@ contract('SupplyChain', function(accounts) {
     it("Testing smart contract function harvestItem() that allows a farmer to harvest coffee", async() => {
         const supplyChain = await SupplyChain.deployed()
         // add farmer1 to the role of farmer
-        await supplyChain.addFarmer(accounts[1])
+        await supplyChain.addFarmer(originFarmerID)
         
         // Declare and Initialize a variable for event
         
@@ -168,11 +168,13 @@ contract('SupplyChain', function(accounts) {
     // 5th Test
     it("Testing smart contract function buyItem() that allows a distributor to buy coffee", async() => {
         const supplyChain = await SupplyChain.deployed()
-        
-        // Declare and Initialize a variable for event
-        
+        await supplyChain.addDistributor(distributorID)
 
+        const beforeFarmerBalance = await web3.eth.getBalance(originFarmerID)
+        const beforeDistributorBalance = await web3.eth.getBalance(distributorID)
+    
         // Mark an item as Sold by calling function buyItem()
+        const call = await supplyChain.buyItem(upc, {'from': distributorID, value: web3.utils.toWei("20", "ether")})
         
         
         // Retrieve the just now saved item from blockchain by calling function fetchItem()
@@ -180,6 +182,12 @@ contract('SupplyChain', function(accounts) {
         const resultBufferTwo = await supplyChain.fetchItemBufferTwo.call(upc)
         const itemInfo = new ItemInformation(resultBufferOne, resultBufferTwo);
         
+        const afterFarmerBalance = await web3.eth.getBalance(originFarmerID)
+        const afterDistributorBalance = await web3.eth.getBalance(distributorID)
+
+        assert.equal(web3.utils.fromWei(afterFarmerBalance) - web3.utils.fromWei(beforeFarmerBalance), web3.utils.fromWei(productPrice), "Error: Farmer receive not matching product price")
+        assert.isAtMost(web3.utils.fromWei(beforeFarmerBalance) - web3.utils.fromWei(afterDistributorBalance), parseInt(productPrice)+1, "Error: Distributor pay not matching product price")
+        // assert.isBelow(web3.utils.fromWei(beforeDistributorBalance - afterDistributorBalance), productPrice, "Error: Farmer receive not matching product price")
         // Verify the result set
         assert.equal(itemInfo.sku, sku, 'Error: Invalid item SKU')
         assert.equal(itemInfo.upc, upc, 'Error: Invalid item UPC')
@@ -189,11 +197,12 @@ contract('SupplyChain', function(accounts) {
         assert.equal(itemInfo.originFarmInformation, originFarmInformation, 'Error: Missing or Invalid originFarmInformation')
         assert.equal(itemInfo.originFarmLatitude, originFarmLatitude, 'Error: Missing or Invalid originFarmLatitude')
         assert.equal(itemInfo.originFarmLongitude, originFarmLongitude, 'Error: Missing or Invalid originFarmLongitude')
+        assert.equal(itemInfo.distributorID, distributorID, 'Error: Missing or Invalid distributorID')
         assert.equal(itemInfo.productID, productID, 'Error: Invalid productId')
         assert.equal(itemInfo.productNotes, productNotes, 'Error: Invalid productNotes')
         assert.equal(itemInfo.productPrice, productPrice, 'Error: Invalid productPrice')
-        assert.equal(itemInfo.itemState, FOR_SALE_STATE, 'Error: Invalid item State')
-        assert.equal(call.logs[0].event, 'ForSale', 'Invalid event emitted')  
+        assert.equal(itemInfo.itemState, SOLD_STATE, 'Error: Invalid item State')
+        assert.equal(call.logs[0].event, 'Sold', 'Invalid event emitted')  
           
         
     })    
