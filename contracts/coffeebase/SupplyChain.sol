@@ -1,14 +1,12 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.7;
 import '../coffeeaccesscontrol/FarmerRole.sol';
+import '../coffeeaccesscontrol/DistributorRole.sol';
 // Define a contract 'Supplychain'
-contract SupplyChain is FarmerRole {
+contract SupplyChain is FarmerRole, DistributorRole {
 
   // Define 'owner'
   address payable owner;
-
-  // Define a variable called 'upc' for Universal Product Code (UPC)
-  uint  upc;
 
   // Define a variable called 'sku' for Stock Keeping Unit (SKU)
   uint  sku;
@@ -19,7 +17,7 @@ contract SupplyChain is FarmerRole {
   // Define a public mapping 'itemsHistory' that maps the UPC to an array of TxHash, 
   // that track its journey through the supply chain -- to be sent from DApp.
   mapping (uint => string[]) itemsHistory;
-  
+
   // Define enum 'State' with the following values:
   enum State 
   { 
@@ -49,9 +47,9 @@ contract SupplyChain is FarmerRole {
     string  productNotes; // Product Notes
     uint    productPrice; // Product Price
     State   itemState;  // Product State as represented in the enum above
-    address distributorID;  // Metamask-Ethereum address of the Distributor
+    address payable distributorID;  // Metamask-Ethereum address of the Distributor
     address retailerID; // Metamask-Ethereum address of the Retailer
-    address payable consumerID; // Metamask-Ethereum address of the Consumer
+    address consumerID; // Metamask-Ethereum address of the Consumer
   }
 
   // Define 8 events with the same 8 state values and accept 'upc' as input argument
@@ -83,11 +81,13 @@ contract SupplyChain is FarmerRole {
   }
   
   // Define a modifier that checks the price and refunds the remaining balance
+  // Modify it to return the amount to distributor instead of consumer. It doesn't make 
+  // sense that the distributors pay the money, and refund it to consumers.
   modifier checkValue(uint _upc) {
     _;
     uint _price = items[_upc].productPrice;
     uint amountToReturn = msg.value - _price;
-    items[_upc].consumerID.transfer(amountToReturn);
+    items[_upc].distributorID.transfer(amountToReturn);
   }
 
   // Define a modifier that checks if an item.state of a upc is Harvested
@@ -144,7 +144,6 @@ contract SupplyChain is FarmerRole {
   constructor() payable {
     owner = payable(msg.sender);
     sku = 1;
-    upc = 1;
   }
 
   // Define a function 'kill' if required
@@ -160,7 +159,7 @@ contract SupplyChain is FarmerRole {
     // Add the new item as part of Harvest
     items[_upc] = Item(
       sku, 
-      upc, 
+      _upc, 
       msg.sender, 
       msg.sender, 
       _originFarmName,
@@ -170,15 +169,15 @@ contract SupplyChain is FarmerRole {
       _upc + sku,
       _productNotes,
       0,
-      State.Harvested,
+      defaultState,
+      payable(address(0)),
       address(0),
-      address(0),
-      payable(address(0))
+      address(0)
     );
     // Increment sku
     sku = sku + 1;
     // Emit the appropriate event
-    emit Harvested(upc);
+    emit Harvested(_upc);
   }
 
   // Define a function 'processtItem' that allows a farmer to mark an item 'Processed'
