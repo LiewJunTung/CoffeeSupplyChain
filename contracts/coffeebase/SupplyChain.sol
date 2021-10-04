@@ -3,8 +3,9 @@ pragma solidity ^0.8.7;
 import '../coffeeaccesscontrol/FarmerRole.sol';
 import '../coffeeaccesscontrol/DistributorRole.sol';
 import '../coffeeaccesscontrol/RetailerRole.sol';
+import '../coffeeaccesscontrol/ConsumerRole.sol';
 // Define a contract 'Supplychain'
-contract SupplyChain is FarmerRole, DistributorRole, RetailerRole {
+contract SupplyChain is FarmerRole, DistributorRole, RetailerRole, ConsumerRole {
 
   // Define 'owner'
   address payable owner;
@@ -280,14 +281,19 @@ contract SupplyChain is FarmerRole, DistributorRole, RetailerRole {
 
   // Define a function 'purchaseItem' that allows the consumer to mark an item 'Purchased'
   // Use the above modifiers to check if the item is received
-  function purchaseItem(uint _upc) public 
+  function purchaseItem(uint _upc) public onlyConsumer
     // Call modifier to check if upc has passed previous supply chain stage
-    
+    received(_upc)
     // Access Control List enforced by calling Smart Contract / DApp
     {
+       Item memory item = items[_upc];
     // Update the appropriate fields - ownerID, consumerID, itemState
-    
+      item.ownerID = msg.sender;
+      item.consumerID = payable(msg.sender);
+      item.itemState = State.Purchased;
+      items[_upc] = item;
     // Emit the appropriate event
+      emit Purchased(_upc);
     
   }
 
