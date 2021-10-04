@@ -15,6 +15,46 @@
         <hr>
         <p style="text-align: center;">Prove the authenticity of coffee using the Ethereum blockchain.</p>
     </div>
+    <div id="ftc-owner">
+        <h2>Access Control</h2>
+        <div class="form-group" id="farmer-console">
+            Farmer ID
+            <br>
+            <input type="text" id="farmerID" name="farmerID" value="" size="50"><br>
+            <div class=button-div>
+                <button class="btn-add-farmer" id="button" type="button" data-id="100">Add Farmer</button>
+                <button class="btn-revoke-farmer" id="button" type="button" data-id="101">Revoke Farmer</button>
+            </div>
+        </div>
+        <div class="form-group" id="distributor-console">
+            Distributor ID
+            <br>
+            <input type="text" id="distributorID" name="distributorID" value="" size="50"><br>
+            <div class=button-div>
+                <button class="btn-add-distributor" id="button" type="button" data-id="200">Add Distributor</button>
+                <button class="btn-revoke-distributor" id="button" type="button" data-id="201">Revoke Distributor</button>
+            </div>
+        </div>
+        <div class="form-group" id="retailer-console">
+            Retailer ID
+            <br>
+            <input type="text" id="retailerID" name="retailerID" value="" size="50"><br>
+            <div class=button-div>
+                <button class="btn-add-retailer" id="button" type="button" data-id="300">Add Retailer</button>
+                <button class="btn-revoke-retailer" id="button" type="button" data-id="301">Revoke Retailer</button>
+            </div>
+        </div>
+        <div class="form-group" id="consumer-console">
+            Consumer ID
+            <br>
+            <input type="text" id="consumerID" name="consumerID" value="" size="50"><br>
+            <div class=button-div>
+                <button class="btn-add-consumer" id="button" type="button" data-id="400">Add Consumer</button>
+                <button class="btn-revoke-Ccnsumer" id="button" type="button" data-id="401">Revoke Consumer</button>
+            </div>
+        </div>
+
+    </div>
 
     <div id="ftc-harvest">
         <h2>Product Overview</h2>
@@ -27,7 +67,7 @@
             <input type="number" id="upc" name="upc" value=1><br>
             Current Owner ID
             <br>
-            <input type="text" id="ownerID" name="ownerID" value="0x963865f57804b38459dd4b2da2f760211a200438" size="50"><br>
+            <input type="text" id="ownerID" name="ownerID" value="" size="50"><br>
             <div class=button-div>
                 <button class="btn-fetchOne" id="button" type="button" data-id="9">Fetch Data 1</button>
                 <button class="btn-fetchTwo" id="button" type="button" data-id="10">Fetch Data 2</button>
@@ -38,8 +78,7 @@
         <div class="form-group">
             Farmer ID
             <br>
-            <input type="text" id="originFarmerID" name="originFarmerID" value="0x99c289eb2aacec289631a5ddf62cf27a63d4494f"
-                size="50"><br>
+            <input type="text" id="originFarmerID" name="originFarmerID" value="" size="50" disabled><br>
             Farm Name
             <br>
             <input type="text" id="originFarmName" name="originFarmName" value="John Doe"><br>
@@ -101,6 +140,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- <script src="js/web3.min.js"></script> -->
+    <script src="js/web3.min.js"></script>
     <script src="js/truffle-contract.js"></script>
     <script src="js/app.js"></script>
 </body>
