@@ -23,7 +23,7 @@
         <div class="form-group" id="farmer-console">
             Farmer ID
             <br>
-            <input type="text" id="farmerID" name="farmerID" value="" size="50"><br>
+            <input type="text" id="newFarmerID" name="newFarmerID" value="" size="50"><br>
             <div class=button-div>
                 <button class="btn-add-farmer" id="button" type="button" data-id="100">Add Farmer</button>
                 <button class="btn-revoke-farmer" id="button" type="button" data-id="101">Revoke Farmer</button>
@@ -32,7 +32,7 @@
         <div class="form-group" id="distributor-console">
             Distributor ID
             <br>
-            <input type="text" id="distributorID" name="distributorID" value="" size="50"><br>
+            <input type="text" id="newDistributorID" name="newDistributorID" value="" size="50"><br>
             <div class=button-div>
                 <button class="btn-add-distributor" id="button" type="button" data-id="200">Add Distributor</button>
                 <button class="btn-revoke-distributor" id="button" type="button" data-id="201">Revoke Distributor</button>
@@ -41,7 +41,7 @@
         <div class="form-group" id="retailer-console">
             Retailer ID
             <br>
-            <input type="text" id="retailerID" name="retailerID" value="" size="50"><br>
+            <input type="text" id="newRetailerID" name="newRetailerID" value="" size="50"><br>
             <div class=button-div>
                 <button class="btn-add-retailer" id="button" type="button" data-id="300">Add Retailer</button>
                 <button class="btn-revoke-retailer" id="button" type="button" data-id="301">Revoke Retailer</button>
@@ -50,7 +50,7 @@
         <div class="form-group" id="consumer-console">
             Consumer ID
             <br>
-            <input type="text" id="consumerID" name="consumerID" value="" size="50"><br>
+            <input type="text" id="newConsumerID" name="newConsumerID" value="" size="50"><br>
             <div class=button-div>
                 <button class="btn-add-consumer" id="button" type="button" data-id="400">Add Consumer</button>
                 <button class="btn-revoke-Ccnsumer" id="button" type="button" data-id="401">Revoke Consumer</button>
@@ -72,8 +72,7 @@
             <br>
             <input type="text" id="ownerID" name="ownerID" value="" size="50" disabled><br>
             <div class=button-div>
-                <button class="btn-fetchOne" id="button" type="button" data-id="9">Fetch Data 1</button>
-                <button class="btn-fetchTwo" id="button" type="button" data-id="10">Fetch Data 2</button>
+                <button class="btn-fetchItem" id="button" type="button" data-id="9">Fetch Data</button>
             </div>
         </div>
         <div class=form-break></div>
@@ -105,7 +104,7 @@
         <div class="form-group">
             Product Notes
             <br>
-            <input type="text" id="productNotes" name="productNotes" value="Best beans for Espresso" size="60"><br>
+            <input type="text" id="productNotes" name="productNotes" value="" size="60"><br>
             Product Price
             <br>
             <input type="number" id="productPrice" name="productPrice" value=1>ETH<br>
@@ -122,6 +121,10 @@
             <br>
             <input type="text" id="consumerID" name="consumerID" value=""
                 size="50" disabled><br>
+            <br>
+            Item State
+            <br>
+            <input type="text" id="itemState" name="itemState" value="" size="50" disabled><br>
             <br>
             <button class="btn-buy" id="button" type="button" data-id="5">Buy</button>
             <button class="btn-ship" id="button" type="button" data-id="6">Ship</button>
