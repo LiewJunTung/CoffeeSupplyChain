@@ -1,5 +1,28 @@
 # Coffee Supply Chain
 
+## Setup and deployment
+1. Create .mnemonic file in the root and add wallet phrase
+1. Create .infuraKey file in the root and add infura project ID for rinkeby
+1. Modify code in 
+   1. /contracts/
+   1. index.html
+   1. src/
+1. Run test via `truffle test` or `truffle test --network ganache` if using ganache
+1. Deploy contract to Rinkeby via `truffle deploy --network rinkeby`
+1. Bundle website via `./deploy.sh`
+1. Deploy to IPFS via `ipfs add -r dist/`, save the hash appears next to `dist/`
+1. Add the IPFS to IPNS via `ipfs name publish <hash>`
+
+## Node Version Number
+v12.16.3
+
+## Truffle Version Number 
+v5.3.10
+
+## Web3 Version Number
+0.20.6
+
+
 ## UML
 ### Activity Diagram
 ![activity](https://plantuml.com/plantuml/svg/HOz12iCm30JlVeMFxHVIIo2bq6j_eDWoDerZ8yc1WXzVapRnJJkxIAkH1KXAN9IgUahE8UggTjZ00oWYDJ1ue0rPdeBnShsf8LCooDmrcFSfmDfZhleUM2ZCHTA-Q2wVCyS-v1vyeK1OVkS83OODkpcbbSk_YqCn_h1OKbOZhhRzy0K0 "activity")
@@ -17,3 +40,16 @@
 2. Made Distributor as payable instead of Customer. Reasons being that the Distributor is the one paying the farmer, not the customer. And the refund should be given back to the Distributor instead.
 
 ## Libraries
+1. web3.min.js - a web3 library to connect to web3
+2. jquery - for simple html manipulation
+3. truffle-hdwallet-provider - for providing truffle config the account needed to deploy contract
+
+## Information
+### Contract Address
+0xE1F4a2aE4D04271D3A55f7e63791E57f4411CF6C
+
+### Transaction Hash
+0xb46e90b528dfda589f6e6a3192a1990d2bf8243110be27e51b4ef07047368e55
+
+### Link 
+https://k51qzi5uqu5dkxr1mbm7vbzjq1dbti8c7hiztwogdvsfczol656m3zifpszi75.ipns.dweb.link/
