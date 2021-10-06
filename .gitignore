@@ -118,3 +118,7 @@ dist
 .pnp.*
 
 build/
+
+.mnemonic
+.infuraKey
+.dist
