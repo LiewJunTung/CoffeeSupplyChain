@@ -11,10 +11,7 @@
   "author": "JT <liewjuntung@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "lite-server": "^2.6.1"
-  },
-  "dependencies": {
-    "truffle": "^5.4.13",
-    "web3": "^1.6.0"
+    "lite-server": "^2.6.1",
+    "truffle-hdwallet-provider": "^1.0.17"
   }
 }
